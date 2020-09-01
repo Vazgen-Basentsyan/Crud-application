@@ -1,0 +1,73 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+
+   <div class="parallax-container">
+      <div class="parallax"><img src="static/background1.jpg"></div>
+    </div>
+    <div class="section white">
+      <div class="row container">
+        <h2 class="header">Home Page</h2>
+        <p class="grey-text text-darken-3 lighten-3"></p>
+      </div>
+    </div>
+       <h2 class="header">Users</h2>
+
+        <table class="centered">
+        <thead>
+          <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Age</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        {% for user in users %}
+        <tr>
+
+            <td>{{ user.first_name }}</td>
+            <td>{{ user.last_name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.age }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+
+       </table>
+
+
+
+
+
+
+
+<div class="parallax-container">
+      <div class="parallax"><img src="static/background2.jpg"></div>
+    </div>
+ <h2 class="header">Homes</h2>
+<table class="centered">
+        <thead>
+          <tr>
+              <th>Title</th>
+              <th>Location</th>
+              <th>Land sqm</th>
+              <th>Place sqm</th>
+              <th>Bedrooms</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        {% for home in homes %}
+        <tr>
+            <td>{{ home.title }}</td>
+            <td>{{ home.location }}</td>
+            <td>{{ home.land_sqm }}</td>
+            <td>{{ home.place_sqm }}</td>
+            <td>{{ home.bedrooms }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+{% endblock content %}
