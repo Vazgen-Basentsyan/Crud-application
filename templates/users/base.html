@@ -1,0 +1,37 @@
+{% load static %}
+<html lang="en">
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <!-- CSS  -->
+  <link href="https://font`s.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="static/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="static/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>Home
+<nav>
+
+    <div class="nav-wrapper">
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="{% url 'index' %}">Home</a></li>
+        <li><a href="{% url 'users' %}">Users</a></li>
+        <li><a href="{% url 'homes' %}">Homes</a></li>
+
+      </ul>
+    </div>
+</nav>
+{% block content %}
+{% endblock content %}
+{% block scripts %}
+{% endblock scripts %}
+
+
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="static/js/materialize.js"></script>
+<script src="static/js/init.js"></script>
+<script src="static/js/init.js"></script>
+
+
+</body>
+</html>

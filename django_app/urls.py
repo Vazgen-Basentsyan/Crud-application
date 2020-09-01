@@ -17,16 +17,18 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.urls import path
 from rest_framework import routers
+from django.conf import settings
+from django.conf.urls.static import static
 
 from users.views import UserViewSet, HomeViewSet
-
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'homes', HomeViewSet)
 
 urlpatterns = [
+    path('', include("users.urls")),
     url(r'^admin/', admin.site.urls),
     path('api/v0/', include(router.urls)),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
