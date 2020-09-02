@@ -86,7 +86,7 @@ class HomesView(ListView):
     queryset = Home.objects.all()
 
     def get_queryset(self):
-        user_id = self.kwargs.get("user_id")
+        user_id = self.request.GET.get("user_id")
         queryset = super().get_queryset().filter()
         if user_id:
             queryset = queryset.filter(user_id=user_id)
