@@ -1,73 +1,100 @@
 {% extends 'users/base.html' %}
-
 {% block content %}
 
-   <div class="parallax-container">
-      <div class="parallax"><img src="static/background1.jpg"></div>
+    <div class="parallax-container">
+        <div class="parallax"><img src="static/background2.jpg"></div>
     </div>
     <div class="section white">
-      <div class="row container">
-        <h2 class="header">Home Page</h2>
-        <p class="grey-text text-darken-3 lighten-3"></p>
-      </div>
+        <div class="row container">
+            <h2 class="header">Home Page</h2>
+            <p class="grey-text text-darken-3 lighten-3"></p>
+        </div>
     </div>
-       <h2 class="header">Users</h2>
+    <h2 class="header">Users</h2>
 
-        <table class="centered">
+    <table class="centered">
         <thead>
-          <tr>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Email</th>
-              <th>Age</th>
-          </tr>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Age</th>
+        </tr>
         </thead>
 
         <tbody>
-        {% for user in users %}
-        <tr>
+        {% for user in user_queryset %}
+            <tr>
 
-            <td>{{ user.first_name }}</td>
-            <td>{{ user.last_name }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.age }}</td>
-        </tr>
+                <td>{{ user.first_name }}</td>
+                <td>{{ user.last_name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.age }}</td>
+            </tr>
         {% endfor %}
         </tbody>
 
-       </table>
+    </table>
+    {% if user_is_paginated %}
+        <ul class="pagination">
+            {% if user_page.has_previous %}
+                <li class="waves-effect">
+                    <span><a href="{% url_replace request 'user_page' user_page.previous_page_number %}">Previous</a></span>
+                </li>
+            {% endif %}
+            <li class="waves-effect">
+                <span>Page {{ user_page.number }} of {{ user_page.paginator.num_pages }}.</span>
+            </li>
+
+            {% if user_page.has_next %}
+                <li class="waves-effect">
+                    <span><a href="{% url_replace request 'user_page' user_page.next_page_number %}">Next</a></span>
+                </li>
+            {% endif %}
+        </ul>
+    {% endif %}
 
 
-
-
-
-
-
-<div class="parallax-container">
-      <div class="parallax"><img src="static/background2.jpg"></div>
-    </div>
- <h2 class="header">Homes</h2>
-<table class="centered">
+    <h2 class="header">Homes</h2>
+    <table class="centered">
         <thead>
-          <tr>
-              <th>Title</th>
-              <th>Location</th>
-              <th>Land sqm</th>
-              <th>Place sqm</th>
-              <th>Bedrooms</th>
-          </tr>
+        <tr>
+            <th>Title</th>
+            <th>Location</th>
+            <th>Land sqm</th>
+            <th>Place sqm</th>
+            <th>Bedrooms</th>
+        </tr>
         </thead>
 
         <tbody>
-        {% for home in homes %}
-        <tr>
-            <td>{{ home.title }}</td>
-            <td>{{ home.location }}</td>
-            <td>{{ home.land_sqm }}</td>
-            <td>{{ home.place_sqm }}</td>
-            <td>{{ home.bedrooms }}</td>
-        </tr>
+        {% for home in home_queryset %}
+            <tr>
+                <td>{{ home.title }}</td>
+                <td>{{ home.location }}</td>
+                <td>{{ home.land_sqm }}</td>
+                <td>{{ home.place_sqm }}</td>
+                <td>{{ home.bedrooms }}</td>
+            </tr>
         {% endfor %}
         </tbody>
-      </table>
+    </table>
+     {% if home_is_paginated %}
+        <ul class="pagination">
+            {% if home_page.has_previous %}
+                <li class="waves-effect">
+                    <span><a href="{% url_replace request 'home_page' home_page.previous_page_number %}">Previous</a></span>
+                </li>
+            {% endif %}
+            <li class="waves-effect">
+                <span>Page {{ home_page.number }} of {{ home_page.paginator.num_pages }}.</span>
+            </li>
+
+            {% if home_page.has_next %}
+                <li class="waves-effect">
+                        <span><a href="{% url_replace request 'home_page' home_page.next_page_number %}">Next</a></span>
+                </li>
+            {% endif %}
+        </ul>
+    {% endif %}
 {% endblock content %}

@@ -22,5 +22,10 @@ For run
 $ python manage.py migrate
 $ python manage.py runserver
 ```
+For log in admin panel
+```
+login: admin@admin.com  
+pass: admin
+```
 
 

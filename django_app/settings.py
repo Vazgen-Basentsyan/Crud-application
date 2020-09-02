@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'users',
     'materializecssform',
-    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -67,6 +66,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+        'builtins': ['users.templatetags.url_replace'],
         },
     },
 ]
