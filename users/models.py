@@ -57,6 +57,7 @@ class User(AbstractUser):
 
 class Home(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
     title = models.CharField(max_length=128)
     location = models.CharField(max_length=128)
     land_sqm = models.FloatField()
@@ -65,3 +66,8 @@ class Home(models.Model):
 
     def __str__(self):
         return "{} : {}".format(self.user.email,  self.title)
+
+
+class HomeImage(models.Model):
+    home = models.ForeignKey(Home, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='images/')

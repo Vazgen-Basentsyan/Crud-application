@@ -1,3 +1,4 @@
 .idea
 *.pyc
 Pipfile.lock
+static_files

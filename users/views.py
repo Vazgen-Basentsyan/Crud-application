@@ -1,10 +1,11 @@
-from django.views.generic import ListView, TemplateView
+from django.views.generic import ListView, TemplateView, DetailView, UpdateView
 from django.utils.translation import gettext as _
 from django.http import Http404
 from django.core.paginator import InvalidPage
 
 from rest_framework import viewsets
 
+from .forms import UserForm
 from .serializers import UserSerializer, HomeSerializer
 from .models import User, Home
 
@@ -58,6 +59,7 @@ class HomeView(TemplateView, ListView):
                 'message': str(e)
             })
 
+
 class UserViewSet(viewsets.ModelViewSet):
     model = User
     serializer_class = UserSerializer
@@ -77,6 +79,17 @@ class UserView(ListView):
     paginate_by = 10
     template_name = 'users/users_list.html'
     queryset = User.objects.all()
+
+
+class UserDetailView(DetailView):
+    model = User
+    slug_field = 'id'
+
+
+class UserUpdateView(UpdateView):
+    model = User
+    slug_field = 'id'
+    form_class = UserForm
 
 
 class HomesView(ListView):
