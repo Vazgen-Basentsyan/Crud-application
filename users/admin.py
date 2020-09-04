@@ -21,7 +21,7 @@ class UserAdmin(admin.ModelAdmin):
 
 
 class HomeAdmin(admin.ModelAdmin):
-    fields = ("title", "location", "land_sqm", "place_sqm", "bedrooms")
+    fields = ("title", "user", "location", "land_sqm", "place_sqm", "bedrooms")
     inlines = [HomeImageAdmin]
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)

@@ -4,11 +4,10 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-Django = "*"
 djangorestframework = "*"
 django-materializecss-form = "*"
 Pillow = "*"
-django = "*"
+django = "==2.2"
 
 [dev-packages]
 

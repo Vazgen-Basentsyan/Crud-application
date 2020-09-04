@@ -22,9 +22,7 @@
             <td>{{ home.land_sqm }}</td>
             <td>{{ home.place_sqm }}</td>
             <td>{{ home.bedrooms }}</td>
-            {% for image in home.homeimage_set %}
-                <td><img src="{{ image }}" alt="image"></td>
-            {% endfor %}
+            <td><img  style="max-height:10%; max-width:10%" src="{{ home.homeimage_set.all.first.image.url }}" alt="image"></td>
         </tr>
         {% endfor %}
         </tbody>

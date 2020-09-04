@@ -57,7 +57,6 @@ class User(AbstractUser):
 
 class Home(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-
     title = models.CharField(max_length=128)
     location = models.CharField(max_length=128)
     land_sqm = models.FloatField()

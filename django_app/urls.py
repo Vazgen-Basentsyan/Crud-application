@@ -28,9 +28,9 @@ router.register(r'users', UserViewSet)
 router.register(r'homes', HomeViewSet)
 
 urlpatterns = [
-    path('', include("users.urls")),
+    path('', include("users.urls"), name="users"),
     url(r'^admin/', admin.site.urls),
     path('api/v0/', include(router.urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
