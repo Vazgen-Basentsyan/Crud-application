@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+ <h2 class="header">Home Images</h2>
+     {% for image in object_list %}
+            <img  src="{{ image.image.url }}" alt="image">
+         <br>
+     {% endfor %}
+
+
+{% endblock content%}

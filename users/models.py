@@ -65,3 +65,8 @@ class Home(models.Model):
 
     def __str__(self):
         return "{} : {}".format(self.user.email,  self.title)
+
+
+class HomeImage(models.Model):
+    home = models.ForeignKey(Home, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='images/')

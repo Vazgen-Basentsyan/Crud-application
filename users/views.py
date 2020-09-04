@@ -1,12 +1,14 @@
-from django.views.generic import ListView, TemplateView
+from django.urls import reverse
+from django.views.generic import ListView, TemplateView, DetailView, UpdateView
 from django.utils.translation import gettext as _
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.core.paginator import InvalidPage
 
 from rest_framework import viewsets
 
+from .forms import UserForm, HomeForm, imageformset
 from .serializers import UserSerializer, HomeSerializer
-from .models import User, Home
+from .models import User, Home, HomeImage
 
 
 class HomeView(TemplateView, ListView):
@@ -58,6 +60,7 @@ class HomeView(TemplateView, ListView):
                 'message': str(e)
             })
 
+
 class UserViewSet(viewsets.ModelViewSet):
     model = User
     serializer_class = UserSerializer
@@ -79,6 +82,60 @@ class UserView(ListView):
     queryset = User.objects.all()
 
 
+class UserDetailView(DetailView):
+    model = User
+    slug_field = 'id'
+
+
+class UserUpdateView(UpdateView):
+    model = User
+    slug_field = 'id'
+    form_class = UserForm
+
+    def get_success_url(self):
+        self.success_url = reverse('users')
+        return self.success_url
+
+
+class HomeUpdateView(UpdateView):
+    model = Home
+    slug_field = 'id'
+    form_class = HomeForm
+
+    def get_success_url(self):
+        self.success_url = reverse('homes-update', args=(self.object.id,))
+        return self.success_url
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context['img_form'] = imageformset(self.request.POST, self.request.FILES, instance=self.object)
+        else:
+            context['img_form'] = imageformset(instance=self.object)
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form_class = self.get_form_class()
+        home_form = self.get_form(form_class)
+        img_form = imageformset(self.request.POST, self.request.FILES, instance=self.object)
+
+        if (home_form.is_valid() and img_form.is_valid()):
+            return self.form_valid(home_form, img_form)
+        else:
+            return self.form_invalid(home_form, img_form)
+
+    def form_valid(self, home_form, img_form):
+        self.object = home_form.save()
+        img_form.instance = self.object
+        img_form.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def form_invalid(self, home_form, img_form):
+        return self.render_to_response(self.get_context_data(home_form=home_form,
+                                                             img_form=img_form))
+
+
 class HomesView(ListView):
     model = Home
     paginate_by = 10
@@ -90,5 +147,18 @@ class HomesView(ListView):
         queryset = super().get_queryset().filter()
         if user_id:
             queryset = queryset.filter(user_id=user_id)
+        return queryset
+
+
+class ImageListView(ListView):
+    model = HomeImage
+    queryset = HomeImage.objects.all()
+    template_name = "users/home_images.html"
+
+    def get_queryset(self):
+        home_id = self.request.GET.get("home_id")
+        queryset = super().get_queryset().filter()
+        if home_id:
+            queryset = queryset.filter(home_id=home_id)
         return queryset
 
