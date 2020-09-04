@@ -8,7 +8,7 @@ from rest_framework import viewsets
 
 from .forms import UserForm, HomeForm, imageformset
 from .serializers import UserSerializer, HomeSerializer
-from .models import User, Home
+from .models import User, Home, HomeImage
 
 
 class HomeView(TemplateView, ListView):
@@ -92,6 +92,10 @@ class UserUpdateView(UpdateView):
     slug_field = 'id'
     form_class = UserForm
 
+    def get_success_url(self):
+        self.success_url = reverse('users')
+        return self.success_url
+
 
 class HomeUpdateView(UpdateView):
     model = Home
@@ -145,4 +149,16 @@ class HomesView(ListView):
             queryset = queryset.filter(user_id=user_id)
         return queryset
 
+
+class ImageListView(ListView):
+    model = HomeImage
+    queryset = HomeImage.objects.all()
+    template_name = "users/home_images.html"
+
+    def get_queryset(self):
+        home_id = self.request.GET.get("home_id")
+        queryset = super().get_queryset().filter()
+        if home_id:
+            queryset = queryset.filter(home_id=home_id)
+        return queryset
 

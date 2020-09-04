@@ -11,6 +11,7 @@
               <th>Place sqm</th>
               <th>Bedrooms</th>
               <th>Images</th>
+              <th></th>
           </tr>
         </thead>
         <tbody>
@@ -22,7 +23,8 @@
             <td>{{ home.land_sqm }}</td>
             <td>{{ home.place_sqm }}</td>
             <td>{{ home.bedrooms }}</td>
-            <td><img  style="max-height:10%; max-width:10%" src="{{ home.homeimage_set.all.first.image.url }}" alt="image"></td>
+            <td><a href="{% url 'home_images' home_id=home.id%}"><img  style="max-height:10%; max-width:10%" src="{{ home.homeimage_set.all.first.image.url }}" alt="image"></a></td>
+            <td><a href="{% url 'homes-update' pk=user.pk %}" class="waves-effect waves-light btn">Edit</a></td>
         </tr>
         {% endfor %}
         </tbody>
